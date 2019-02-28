@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import * as TNSPhone from 'nativescript-phone';
+
 import { WaitListEntry } from "../models/wait-list-entry";
 
 @Component({
@@ -11,8 +13,9 @@ export class HomeComponent implements OnInit {
     waitListEntries: WaitListEntry[] = [];
     name: string = '';
     guests: number = 1;
-    phone: number;
+    phone: string = '';
     isShowingDataEntry: boolean = false;
+    message: string = "You're now on the wait list. We'll text you when a table becomes available.";
 
     showDataEntry()
     {
@@ -22,6 +25,25 @@ export class HomeComponent implements OnInit {
     done()
     {
         this.isShowingDataEntry = false;
+
+        //if(Number.isInteger(this.phone)) {
+            //alert(this.message = this.name + ' ' + "You're now on the wait list. We'll text you when a table becomes available.");
+            this.waitListEntries.push(
+                {
+                    Name: this.name,
+                    Phone: this.phone,
+                    Guests: this.guests
+                }
+            )
+            /*
+            TNSPhone.sms([this.phone.toString()], this.message).then(result => {
+                    console.dir(result);
+                    this.phone = null;                    
+                }, error => {
+                    console.dir(error);
+                });
+                */
+        //}
     }
 
     cancel()
@@ -30,17 +52,10 @@ export class HomeComponent implements OnInit {
     }
 
     constructor() {
-        // Use the component constructor to inject providers.
-        this.waitListEntries.push(
-            {
-                Name: "Trung",
-                Phone: '714-757-4469',
-                Guests: 3
-            }
-        )
+       
     }
 
-    ngOnInit(): void {
-       // Init your component properties here.
+    ngOnInit(): void {       
+    
     }
 }
